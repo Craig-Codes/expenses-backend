@@ -4,8 +4,8 @@ const cors = require("cors");
 const mongoose = require("mongoose"); // mongoose for intergrating MongoDB database
 
 // Modals used to shape data going into MongoDB - required by Mongoose, the ODM being used
-const Trip = require("../expenses-tracker-backend/models/trip");
-const Receipt = require("../expenses-tracker-backend/models/receipt");
+const Trip = require("/expenses-tracker-backend/models/trip");
+const Receipt = require("/expenses-tracker-backend/models/receipt");
 var app = express();
 
 app.use(cors()); // required to access resources from remote hosts. Frontend and backend are seperate in the app so necessary
