@@ -39,7 +39,9 @@ mongoose
 
 mongoose.set("useFindAndModify", false);
 
-// const port = 3000;
+app.get("/", function (req, res) {
+  res.send("Expenses Tracker API");
+});
 
 // GET Initial trips route
 app.get("/trips", async (req, res) => {
