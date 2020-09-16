@@ -9,6 +9,7 @@ const Receipt = require("./models/receipt");
 var app = express();
 
 app.use(cors()); // required to access resources from remote hosts. Frontend and backend are seperate in the app so necessary
+app.options("*", cors()); // cors pre-flight to enable cors policy on 'complex' request such as delete requests
 
 app.use(bodyParser.json({ limit: "50mb" })); // required to allow for long base64 image strings
 app.use(
@@ -189,17 +190,19 @@ app.put("/receipts", async (req, res) => {
 
 // Delete Receipt
 app.delete("/receipts", async (req, res) => {
-  await Receipt.findOneAndDelete({ timestamp: req.query.timestamp }, function (
-    err,
-    receipt
-  ) {
-    if (receipt) {
-      console.log("Deleted Receipt: ", receipt);
-      res.send({ success: "Receipt Deleted" }); // if no error we return a response to front end
-    } else {
-      console.log(err);
-    }
-  });
+  try {
+    const deletedReceipt = await Receipt.findOneAndDelete(
+      { timestamp: req.query.timestamp },
+      function (err, receipt) {
+        if (receipt) {
+          console.log("Deleted Receipt");
+        }
+      }
+    );
+    res.send({ success: "Receipt Deleted" }); // if no error we return a response to front end
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 app.listen(process.env.PORT, () => {
