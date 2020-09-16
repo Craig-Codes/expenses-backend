@@ -110,7 +110,7 @@ app.put("/trips", async (req, res) => {
 app.delete("/trips", async (req, res) => {
   try {
     console.log(req.query.tripId);
-    const deletedTrip = await await Trip.findOneAndDelete(
+    const deletedTrip = await Trip.findOneAndDelete(
       { tripId: req.query.tripId },
       function (err, trip) {
         if (trip) {
@@ -189,21 +189,17 @@ app.put("/receipts", async (req, res) => {
 
 // Delete Receipt
 app.delete("/receipts", async (req, res) => {
-  try {
-    console.log(req.query.timestamp);
-    const deletedReceipt = await Receipt.findOneAndDelete(
-      { timestamp: req.query.timestamp },
-      function (err, receipt) {
-        if (receipt) {
-          res.send({ success: "Receipt Deleted" }); // if no error we return a response to front end
-        } else {
-          console.log(err);
-        }
-      }
-    );
-  } catch (err) {
-    console.log(err);
-  }
+  await Receipt.findOneAndDelete({ timestamp: req.query.timestamp }, function (
+    err,
+    receipt
+  ) {
+    if (receipt) {
+      console.log("Deleted Receipt: ", receipt);
+      res.send({ success: "Receipt Deleted" }); // if no error we return a response to front end
+    } else {
+      console.log(err);
+    }
+  });
 });
 
 app.listen(process.env.PORT, () => {
