@@ -176,7 +176,6 @@ app.post("/receipts", async (req, res) => {
 
 // EDIT route for receipts
 app.put("/receipts", async (req, res) => {
-  console.log("EDIT TIMESTAMP====== ", req.body.timestamp);
   await Receipt.findOneAndUpdate(
     { timestamp: req.body.timestamp },
     {
@@ -195,9 +194,6 @@ app.put("/receipts", async (req, res) => {
 
 // Delete Receipt
 app.delete("/receipts", async (req, res) => {
-  console.log(req.body);
-  console.log(req.query);
-  console.log("DELETE TIMESTAMP ======", req.query.timestamp);
   try {
     const deletedReceipt = await Receipt.findOneAndDelete(
       { timestamp: req.query.timestamp },
