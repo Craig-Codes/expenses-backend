@@ -73,6 +73,7 @@ app.post("/trips", async (req, res) => {
           amount: req.body.price,
         });
         newTrip.save(); // save the newTrip into the database
+        console.log("trip created");
       } catch (err) {
         console.log(err);
         return;
@@ -101,7 +102,7 @@ app.put("/trips", async (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(doc);
+        console.log("trip editted");
         res.send(doc); // if no error we return a response to front end
       }
     }
@@ -115,7 +116,7 @@ app.delete("/trips", async (req, res) => {
       { tripId: req.query.tripId },
       function (err, trip) {
         if (trip) {
-          console.log("Deleted Trip: ", trip);
+          console.log("trip deleted");
         }
       }
     );
@@ -135,10 +136,10 @@ app.delete("/trips", async (req, res) => {
 
 // GET initial receipts route
 app.get("/receipts", async (req, res) => {
-  console.log("receipt get request");
   try {
     const foundReceipts = await Receipt.find({ user: req.query.user }).exec();
     res.send(foundReceipts);
+    console.log("initial receipts fetched");
   } catch (err) {
     console.log(err);
   }
@@ -167,6 +168,7 @@ app.post("/receipts", async (req, res) => {
       return;
     }
   });
+  console.log("receipt created");
   res.send({ success: "New Receipt created" });
 });
 
@@ -182,6 +184,7 @@ app.put("/receipts", async (req, res) => {
       if (err) {
         console.log(err);
       } else {
+        console.log("receipt editted");
         res.send({ success: "Receipt Editted" }); // if no error we return a response to front end
       }
     }
@@ -199,6 +202,7 @@ app.delete("/receipts", async (req, res) => {
         }
       }
     );
+    console.log("receipt deleted");
     res.send({ success: "Receipt Deleted" }); // if no error we return a response to front end
   } catch (err) {
     console.log(err);
