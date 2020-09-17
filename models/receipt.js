@@ -5,7 +5,7 @@ let receiptSchema = new mongoose.Schema({
   tripId: String,
   image: String,
   price: Number,
-  timestamp: Date,
+  timestamp: String,
 });
 
 const Receipt = mongoose.model("Receipt", receiptSchema);

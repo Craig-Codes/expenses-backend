@@ -148,13 +148,8 @@ app.get("/receipts", async (req, res) => {
 // ADD new receipt route
 app.post("/receipts", async (req, res) => {
   console.log(req.body.timestamp);
-  console.log(typeof req.body.timestamp);
-  const receiptDate = new Date(req.body.timestamp);
-  console.log(receiptDate);
-  const saveDate = receiptDate.toISOString();
-  console.log(saveDate);
 
-  Receipt.find({ timestamp: saveDate }, async function (err, res) {
+  Receipt.find({ timestamp: req.body.timestamp }, async function (err, res) {
     if (res.length === 0) {
       console.log("no receipt found, add one!");
       try {
@@ -164,7 +159,7 @@ app.post("/receipts", async (req, res) => {
           tripId: req.body.tripId,
           image: req.body.image,
           price: req.body.price,
-          timestamp: saveDate,
+          timestamp: req.body.timestamp,
         });
         newReceipt.save(); // save the newTrip into the database
       } catch (err) {
