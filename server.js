@@ -193,14 +193,19 @@ app.put("/receipts", async (req, res) => {
 
 // Delete Receipt
 app.delete("/receipts", async (req, res) => {
-  console.log("req.query.timestamp");
+  console.log(req.query.timestamp);
+  console.log(typeof req.query.timestamp);
+  const timestampString = req.query.timestamp.toISOString(); // correctly formate timestamp for mongoDb search
 
   try {
     const deletedReceipt = await Receipt.deleteOne(
-      { timestamp: new Date("req.query.timestamp") },
+      { timestamp: timestampString },
       function (err, receipt) {
         if (receipt) {
           console.log("Deleted Receipt");
+        }
+        if (err) {
+          console.log(err);
         }
       }
     );
