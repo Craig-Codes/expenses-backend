@@ -147,9 +147,9 @@ app.get("/receipts", async (req, res) => {
 
 // ADD new receipt route
 app.post("/receipts", async (req, res) => {
-  console.log(req.query.timestamp);
-  console.log(typeof req.query.timestamp);
-  const receiptDate = new Date(req.query.timestamp);
+  console.log(req.body.timestamp);
+  console.log(typeof req.body.timestamp);
+  const receiptDate = new Date(req.body.timestamp);
   console.log(receiptDate);
   const saveDate = receiptDate.toISOString();
   console.log(saveDate);
