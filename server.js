@@ -193,16 +193,17 @@ app.put("/receipts", async (req, res) => {
 
 // Delete Receipt
 app.delete("/receipts", async (req, res) => {
+  console.log("req.query.timestamp");
+
   try {
-    const deletedReceipt = await Receipt.findOneAndDelete(
-      { timestamp: req.query.timestamp },
+    const deletedReceipt = await Receipt.deleteOne(
+      { timestamp: new Date("req.query.timestamp") },
       function (err, receipt) {
         if (receipt) {
           console.log("Deleted Receipt");
         }
       }
     );
-    console.log("receipt deleted");
     res.send({ success: "Receipt Deleted" }); // if no error we return a response to front end
   } catch (err) {
     console.log(err);
